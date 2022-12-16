@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row center">
+        <div class="col-md-6 offset-md-3">
+            {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <div {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">Имя пользователя</label>
+                    <input type="text" class="form-control" name="username" placeholder="Введите имя пользователя" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" class="form-control" name="password" placeholder="Пароль" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Авторизоваться</button>
+                <p>Нет учетной записи?<a href="{% url 'accounts:register' %}">Зарегистрируйся здесь</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

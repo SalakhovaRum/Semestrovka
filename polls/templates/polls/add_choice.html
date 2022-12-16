@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row center">
+        <div class="col-md-6 offset-md-3">
+            {% if edit_choice %}
+            <h2>Выбор обновления</h2>
+            {% else %}
+            <h2>Добавить новый выбор</h2>
+            {% endif %}
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form action="" method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {{ field }}
+                </div>
+                {% endfor %}
+                {% if edit_choice %}
+                <button type="submit" class="btn btn-primary">Обновление</button>
+                <a class="btn btn-danger" href="{% url 'polls:choice_delete' choice.id %}" role="button" onclick="return confirm('Вы уверены, что хотите удалить это?')">Удалить</a>
+                {% else %}
+                <button type="submit" class="btn btn-primary">Добавить</button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
